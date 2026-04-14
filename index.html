@@ -1,658 +1,649 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jesus Morillo — Geografía · Python · Dev</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title> Bienvenido al portafolio de Jesus Morillo </title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilo.css">
-
-
 </head>
-
 <body>
-    <div class="contenedor-header">
-        <header>
-            <div class="logo">
-                <a href="#">Jesus Morillo</a>
-            </div>
-            <nav id="nav">
-                <ul>
-                    <li><a href="#inicio">INICIO</a></li>
-                    <li><a href="#sobremi">SOBRE MI</a></li>
-                    <li><a href="#skills">HABILIDADES</a></li>
-                    <li><a href="#curriculum">CURRICULUM</a></li>
-                    <li><a href="#portfolio">PORTAFOLIO</a></li>
-                    <li><a href="#contacto">CONTACTO</a></li>
-                </ul>
 
-            </nav>
-            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
-                <i class="fa-solid fa-bars fa-bounce" style="color: #000000;"></i>
-            </div>
-        </header>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
 
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" id="lbClose"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lightbox-nav prev" id="lbPrev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lightbox-nav next" id="lbNext"><i class="fa-solid fa-chevron-right"></i></button>
+        <img class="lightbox-img" id="lbImg" src="" alt="">
+        <div class="lightbox-caption">
+            <strong id="lbTitle"></strong>
+            <span id="lbType"></span>
+        </div>
     </div>
-    <section id="inicio" class="inicio">
-        <div class="contenido-banner">
-            <div class="contenedor-img">
-                <img src="img/jesus.png" alt="">
-            </div>
-            <h1>JESUS MORILLO</h1>
-            <h2>Python | Software developer</h2>
-            <div class="redes">
-                <a href="https://www.linkedin.com/in/jesus-morillo-a7b061192/">
-                    <i class="fa-brands fa-linkedin fa-beat" style="color: #000000;"></i>
-                </a>
+</div>
 
-                <a href="https://api.whatsapp.com/send?phone=5804122138280"><i class="fa-brands fa-whatsapp fa-beat" style="color: #000000;"></i></a>
-            </div>
-
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#inicio" class="nav-logo">JM<span>.</span></a>
+        <nav id="nav">
+            <ul>
+                <li><a href="#inicio"    onclick="seleccionar()">INICIO</a></li>
+                <li><a href="#sobremi"   onclick="seleccionar()">SOBRE MÍ</a></li>
+                <li><a href="#skills"    onclick="seleccionar()">SKILLS</a></li>
+                <li><a href="#curriculum" onclick="seleccionar()">CURRICULUM</a></li>
+                <li><a href="#portfolio"  onclick="seleccionar()">PROYECTOS</a></li>
+                <li><a href="#sig"        onclick="seleccionar()">SIG</a></li>
+                <li><a href="#portfolio2" onclick="seleccionar()">WEB</a></li>
+                <li><a href="#contacto"   onclick="seleccionar()">CONTACTO</a></li>
+            </ul>
+        </nav>
+        <div class="nav-toggle" onclick="mostrarOcultarMenu()" id="navToggle">
+            <span></span><span></span><span></span>
         </div>
-    </section>
+    </div>
+</header>
 
+<!-- ═══════ HERO ═══════ -->
+<section id="inicio" class="hero">
+    <div class="hero-bg">
+        <!-- Map coordinate grid -->
+        <div class="map-grid"></div>
 
-    <!--- seccion inicio --->
+        <!-- Floating coordinate labels -->
+        <span class="coord-label" style="top:12%;left:5%;">10°28'N 66°54'W</span>
+        <span class="coord-label" style="top:30%;left:88%;">UTM 20P</span>
+        <span class="coord-label" style="top:72%;left:8%;">DATUM WGS84</span>
+        <span class="coord-label" style="top:85%;left:75%;">ESCALA 1:25.000</span>
+        <span class="coord-label" style="top:55%;left:92%;">10°29'N</span>
+        <span class="coord-label" style="top:18%;left:50%;">PROYECCIÓN MERCATOR</span>
 
-    <section id="sobremi" class="sobremi">
-        <div class="contenido-seccion">
+        <!-- SVG topographic contour lines -->
+        <svg class="topo-svg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <!-- Organic contour curves spanning full width -->
+            <path class="topo-path" d="M -50 550 C 100 500, 200 420, 350 460 C 500 500, 600 380, 750 350 C 900 320, 1000 400, 1150 370 C 1300 340, 1380 290, 1450 310"/>
+            <path class="topo-path" d="M -50 490 C 120 440, 230 360, 380 400 C 530 440, 630 320, 780 295 C 930 270, 1030 360, 1170 320 C 1320 280, 1390 230, 1450 250"/>
+            <path class="topo-path" d="M -50 430 C 140 380, 260 300, 410 340 C 560 380, 660 260, 810 240 C 960 220, 1060 310, 1200 275 C 1340 240, 1400 185, 1450 200"/>
+            <path class="topo-path" d="M -50 380 C 160 325, 290 245, 440 285 C 590 325, 690 210, 840 192 C 990 174, 1085 265, 1235 232 C 1365 200, 1415 148, 1450 160"/>
+            <path class="topo-path" d="M -50 640 C 80 595, 180 510, 330 550 C 480 590, 570 470, 730 445 C 880 420, 980 500, 1120 468 C 1265 436, 1355 385, 1450 400"/>
+            <path class="topo-path" d="M -50 720 C 70 680, 170 600, 310 640 C 450 680, 550 570, 700 548 C 850 526, 950 610, 1090 578 C 1230 546, 1330 495, 1450 510"/>
+        </svg>
 
+        <!-- Pulsing topo rings -->
+        <div class="topo-ring r1"></div>
+        <div class="topo-ring r2"></div>
+        <div class="topo-ring r3"></div>
+        <div class="topo-ring r4"></div>
+        <div class="topo-ring r5"></div>
 
-
-
-            <h2>Sobre mi</h2>
-
-
-            <p>
-
-                <span>Hola, soy Jesus Morillo</span> un programador y estudiante de geografia de 23 años, actualmente estoy
-                estudiando en la Universidad Central de Venezuela. Mi especialización se centra en
-                múltiples lenguajes, incluyendo Python, JavaScript, HTML, CSS, Java y C#. Manejo bases de datos SQL como
-                Microsoft SQL Server y MySQL.
-
-            <p>Mi enfoque se divide en dos áreas</p>
-
-            Busco oportunidades que contribuyan a mi formación, me entusiasma
-            enfrentar desafíos que amplíen mis habilidades y me permitan aportar valor a mis proyectos, yo pienso que la
-            búsqueda de experiencias ayuda a crecer tanto laboral como personalmente.
-            <div class="fila">
-                <!---datos personales -->
-                <div class="col">
-                    <h3>Datos personales</h3>
-                    <ul>
-                        <li>
-                            <strong>Cumpleaños</strong>
-                            02/03/2001
-                        </li>
-                        <li>
-                            <strong>Telefono</strong>
-                            +58 0412-213-8280
-                        </li>
-                        <li>
-                            <strong>Email</strong>
-                            jesusmorillo507@gmail.com
-                        </li>
-                        <li>
-                            <strong>Perfil linkedin</strong>
-                            <a href="https://www.linkedin.com/in/jesus-morillo-a7b061192/">Ir al Perfil</a>
-
-                        </li>
-                        <li>
-                            <strong>Ubicacion</strong>
-                            Caracas, Venezuela
-                        </li>
-                        <li>
-                            <strong>Cargo</strong>
-                            <span>PRESENCIAL</span>
-                        </li>
-                        </li>
-                    </ul>
-                </div>
-
-                <!--intereses-->
-                <div class="col">
-                    <h3>Intereses</h3>
-                    <div class="contenedor-intereses">
-                        <div class="interes">
-                            <i class="fa-solid fa-book fa-beat" style="color: #000000;"></i>
-                            <span>LEER</span>
-                        </div>
-                        <div class="interes">
-                            <i class="fa-solid fa-headphones fa-beat" style="color: #000000;"></i>
-                            <span>MUSICA</span>
-                        </div>
-                        <div class="interes">
-                            <i class="fa-solid fa-briefcase fa-beat" style="color: #000000;"></i>
-                            <span>TRABAJAR</span>
-                        </div>
-                        <div class="interes">
-                            <i class="fa-solid fa-computer fa-beat" style="color: #000000;"></i>
-                            <span>PROGRAMAR</span>
-                        </div>
-                        <div class="interes">
-                            <i class="fa-solid fa-thumbs-up fa-beat" style="color: #000000;"></i>
-                            <span>APRENDER</span>
-                        </div>
-                        <div class="interes">
-                            <i class="fa-solid fa-handshake fa-beat" style="color: #000000;"></i>
-                            <span>SOCIALIZAR</span>
-                        </div>
-                        <div class="interes">
-                            <i class="fa-solid fa-hand-holding-heart fa-beat" style="color: #000000;"></i>
-                            <span>CRECER</span>
-
-                        </div>
-                        <div class="interes">
-                            <i class="fa-solid fa-hourglass-start fa-beat" style="color: #000000;"></i>
-                            <span>PRODUCTIVIDAD</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Radar sonar -->
+        <div class="radar-wrap">
+            <div class="radar-circle"></div>
+            <div class="radar-circle-inner"></div>
+            <div class="radar-cross-h"></div>
+            <div class="radar-cross-v"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-blip"></div>
+            <div class="radar-blip"></div>
+            <div class="radar-blip"></div>
         </div>
 
-        <button>
-            <a href="cv/Cv-Jesus-Morillo.pdf" download="Curriculum Jesus Morillo" id="enlacegithub">
-                DESCARGAR CV
-                <i class="fa-solid fa-download fa-beat" style="color: #000000;"></i>
-                <span class="overlay"></span>
-            </a>
-        </button>
+        <!-- Orbs -->
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
 
+    <div class="hero-content">
+        <div class="hero-photo-wrap">
+            <div class="photo-rings">
+                <div class="ring ring-outer"></div>
+                <div class="ring ring-mid"></div>
+            </div>
+            <div class="photo-frame">
+                <img src="img/jesus.jpg" alt="Jesus Morillo">
+            </div>
+            <div class="photo-badge available"><span class="dot-pulse"></span>Disponible</div>
+            <div class="photo-badge years"><i class="fa-solid fa-code"></i> 7+ años</div>
         </div>
-    </section>
-    <!---SECCION SKILLS-->
-    <section class="skills" id="skills">
-        <div class="contenido-seccion">
-            <h2>Habilidades</h2>
-            <div class="fila">
 
-                <div class="col">
-                    <h3>Habilidades técnicas</h3>
-
-                    <div class="skill">
-                        <span>Python</span>
-                        <div class="barra-skill">
-                            <div class="progreso python">
-                                <span>70%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Javascript</span>
-                        <div class="barra-skill">
-                            <div class="progreso javascrip">
-                                <span>70%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>HTML Y CSS</span>
-                        <div class="barra-skill">
-                            <div class="progreso htmlcss">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Java</span>
-                        <div class="barra-skill">
-                            <div class="progreso java">
-                                <span>70%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                   
-
-                    <div class="skill">
-                        <span>C# (C Sharp)</span>
-                        <div class="barra-skill">
-                            <div class="progreso c">
-                                <span>80%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Base de datos SQL (Microsoft SQL Server, MySQL)</span>
-                        <div class="barra-skill">
-                            <div class="progreso sql">
-                                <span>70%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Microsoft Office (Excel,Access,Word)</span>
-                        <div class="barra-skill">
-                            <div class="progreso micro">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Photoshop</span>
-                        <div class="barra-skill">
-                            <div class="progreso photoshop">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Illustrator</span>
-                        <div class="barra-skill">
-                            <div class="progreso illustrator">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!---Laborales skill--->
-                <div class="col">
-                    <h3>Habilidades Laborales</h3>
-
-                    <div class="skill">
-                        <span>Comunicacion</span>
-                        <div class="barra-skill">
-                            <div class="progreso comunicacion">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Trabajo en equipo</span>
-                        <div class="barra-skill">
-                            <div class="progreso equipo">
-                                <span>90%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Creatividad</span>
-                        <div class="barra-skill">
-                            <div class="progreso creatividad">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Ingles</span>
-                        <div class="barra-skill">
-                            <div class="progreso ingles">
-                                <span>70%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Léxico y dicción</span>
-                        <div class="barra-skill">
-                            <div class="progreso ortografia">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Innovacion</span>
-                        <div class="barra-skill">
-                            <div class="progreso innovacion">
-                                <span>80%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill">
-                        <span>Capacidad de escucha</span>
-                        <div class="barra-skill">
-                            <div class="progreso escucha">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                   
-
-                    <div class="skill">
-                        <span>Resolucion de problemas</span>
-                        <div class="barra-skill">
-                            <div class="progreso problemas">
-                                <span>75%</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="skill">
-                        <span>Dedicacion</span>
-                        <div class="barra-skill">
-                            <div class="progreso dedi">
-                                <span>100%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+        <div class="hero-text">
+            <span class="hero-label"><span class="label-dot"></span>// 10°28'N 66°54'W · Caracas, Venezuela</span>
+            <h1 class="hero-name">
+                <span class="name-line">JESUS</span>
+                <span class="name-line accent-line">MORILLO</span>
+            </h1>
+            <div class="hero-role-wrap">
+                <span class="role-prefix mono">_</span>
+                <span id="typewriter" class="typewriter mono"></span>
+                <span class="cursor-blink">█</span>
+            </div>
+            <p class="hero-desc">Perfil híbrido entre <strong>desarrollo de software</strong> y <strong>análisis geoespacial</strong>. Integro tecnología, datos y territorio con precisión cartográfica.</p>
+            <div class="hero-tags">
+                <span class="htag">Python</span>
+                <span class="htag">QGIS</span>
+                <span class="htag">Fullstack</span>
+                <span class="htag">ArcGIS</span>
+                <span class="htag">Supabase</span>
+                <span class="htag">Android</span>
+                <span class="htag">DEM</span>
+                <span class="htag">Cartografía</span>
+            </div>
+            <div class="hero-ctas">
+                <a href="#portfolio" class="btn-primary">Ver Portafolio <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#contacto" class="btn-outline">Contáctame</a>
+            </div>
+            <div class="hero-socials">
+                <a href="https://www.linkedin.com/in/jesus-morillo-a7b061192/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=5804122138280" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://github.com/JesusMorilloPortafolio" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="mailto:jesusmorillo507@gmail.com"><i class="fa-solid fa-envelope"></i></a>
             </div>
         </div>
+    </div>
 
+    <div class="scroll-hint">
+        <span class="mono">SCROLL</span>
+        <div class="scroll-line-anim"></div>
+    </div>
+</section>
 
-        <!-- SECCION CURRICULUM -->
-        <section id="curriculum" class="curriculum">
-            <div class="contenido-seccion">
-                <h2>Curriculum</h2>
-                <div class="fila">
-                    <div class="col izquierda">
-                        <h3>Educación</h3>
-                        <div class="item izq">
-                            <h4>Geografia</h4>
-                            <span class="casa">Universidad Central de Venezuela</span>
-                            <span class="fecha">2024 - Presente</span>
-                            <p></p>
-                            <div class="conectori">
-                                <div class="circuloi"></div>
-                            </div>
+<!-- ═══════ SOBRE MÍ ═══════ -->
+<section id="sobremi" class="sobremi">
+    <div class="sobremi-map-texture"></div>
+    <div class="contenedor">
+        <div class="section-header">
+            <span class="section-tag mono">01 / SOBRE MÍ</span>
+            <h2 class="section-title">¿Quién soy?</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="sobremi-grid">
+            <div class="sobremi-text anim-left">
+                <p class="about-highlight"><span class="highlight-name">Hola, soy Jesús Morillo</span> — programador con más de 7 años de experiencia y estudiante de Geografía en la Universidad Central de Venezuela.</p>
+                <p class="about-body">Mi perfil es <strong>híbrido</strong>: combino el desarrollo de software con el análisis geoespacial. Tengo experiencia en plataformas web/móvil fullstack y en cartografía técnica con QGIS y ArcGIS. Orientado a resultados, con habilidad para integrar tecnología, datos y territorio.</p>
+                <p class="about-body">Busco proyectos que amplíen mis habilidades y me permitan aportar valor real. Creo que la experiencia y los desafíos son el motor del crecimiento personal y profesional.</p>
+                <div class="personal-grid">
+                    <div class="pdata-item"><span class="pdata-label"><i class="fa-solid fa-cake-candles"></i> Nacimiento</span><span class="pdata-val">02 / 03 / 2001</span></div>
+                    <div class="pdata-item"><span class="pdata-label"><i class="fa-solid fa-mobile-screen"></i> Teléfono</span><span class="pdata-val">+58 0412-213-8280</span></div>
+                    <div class="pdata-item"><span class="pdata-label"><i class="fa-solid fa-envelope"></i> Email</span><span class="pdata-val"><a href="mailto:jesusmorillo507@gmail.com">jesusmorillo507@gmail.com</a></span></div>
+                    <div class="pdata-item"><span class="pdata-label"><i class="fa-solid fa-location-dot"></i> Ubicación</span><span class="pdata-val">Caracas, Venezuela</span></div>
+                    <div class="pdata-item"><span class="pdata-label"><i class="fa-brands fa-linkedin"></i> LinkedIn</span><span class="pdata-val"><a href="https://www.linkedin.com/in/jesus-morillo-a7b061192/" target="_blank">Ver perfil →</a></span></div>
+                    <div class="pdata-item"><span class="pdata-label"><i class="fa-solid fa-briefcase"></i> Modalidad</span><span class="pdata-val badge-presencial">PRESENCIAL / REMOTO</span></div>
+                </div>
+                <a href="cv/CV-Jesus-Morillo.pdf" download class="btn-primary download-btn">DESCARGAR CV <i class="fa-solid fa-download"></i></a>
+            </div>
+            <div class="sobremi-right anim-right">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-code"></i></div><div class="stat-num-wrap"><span class="stat-num" data-target="7">0</span><span class="stat-suffix">+</span></div><span class="stat-label">Años codificando</span></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-map"></i></div><div class="stat-num-wrap"><span class="stat-num" data-target="3">0</span><span class="stat-suffix"></span></div><span class="stat-label">Áreas de expertise</span></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-rocket"></i></div><div class="stat-num-wrap"><span class="stat-num" data-target="12">0</span><span class="stat-suffix">+</span></div><span class="stat-label">Proyectos en GitHub</span></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div><div class="stat-num-wrap"><span class="stat-num" data-target="30">0</span><span class="stat-suffix">+</span></div><span class="stat-label">Mapas producidos</span></div>
+                </div>
+                <div class="interests-section">
+                    <h3 class="interests-title">Intereses</h3>
+                    <div class="interests-wrap">
+                        <div class="interest-chip"><i class="fa-solid fa-map"></i><span>SIG</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-globe"></i><span>QGIS</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-computer"></i><span>Programar</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-earth-americas"></i><span>Cartografía</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-thumbs-up"></i><span>Aprender</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-handshake"></i><span>Socializar</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-hand-holding-heart"></i><span>Crecer</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-hourglass-start"></i><span>Productividad</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-layer-group"></i><span>ArcGIS</span></div>
+                        <div class="interest-chip"><i class="fa-brands fa-python"></i><span>Python</span></div>
+                        <div class="interest-chip"><i class="fa-brands fa-js"></i><span>JavaScript</span></div>
+                        <div class="interest-chip"><i class="fa-brands fa-html5"></i><span>HTML & CSS</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-file-excel"></i><span>Excel</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-file-word"></i><span>Word</span></div>
+                        <div class="interest-chip"><i class="fa-solid fa-file-powerpoint"></i><span>PowerPoint</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ SKILLS ═══════ -->
+<section class="skills" id="skills">
+    <div class="skills-scan-overlay"></div>
+    <div class="skills-border-bottom"></div>
+    <div class="contenedor">
+        <div class="section-header">
+            <span class="section-tag mono">02 / HABILIDADES</span>
+            <h2 class="section-title">Mi Stack</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="skills-layout">
+            <div class="skills-col anim-up">
+                <h3 class="skills-col-title"><i class="fa-solid fa-terminal"></i> Técnicas</h3>
+                <div class="skill-item"><div class="skill-meta"><span>Python</span><span class="mono">70%</span></div><div class="skill-bar"><div class="skill-fill" data-width="70" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>JavaScript / ES6+</span><span class="mono">70%</span></div><div class="skill-bar"><div class="skill-fill" data-width="70" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>HTML5 & CSS3</span><span class="mono">95%</span></div><div class="skill-bar"><div class="skill-fill" data-width="95" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>QGIS</span><span class="mono">80%</span></div><div class="skill-bar"><div class="skill-fill" data-width="80" style="background:linear-gradient(90deg,#2d7a4f,#5fdd9e);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>ArcGIS</span><span class="mono">75%</span></div><div class="skill-bar"><div class="skill-fill" data-width="75" style="background:linear-gradient(90deg,#2d7a4f,#5fdd9e);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>AutoCAD</span><span class="mono">65%</span></div><div class="skill-bar"><div class="skill-fill" data-width="65" style="background:linear-gradient(90deg,#3a2a10,#c49a14);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Supabase</span><span class="mono">75%</span></div><div class="skill-bar"><div class="skill-fill" data-width="75" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Java</span><span class="mono">65%</span></div><div class="skill-bar"><div class="skill-fill" data-width="65" style="background:linear-gradient(90deg,#1a4a2e,#3da668);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>C# (C Sharp)</span><span class="mono">75%</span></div><div class="skill-bar"><div class="skill-fill" data-width="75" style="background:linear-gradient(90deg,#1a4a2e,#3da668);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>SQL (MySQL / SQL Server)</span><span class="mono">70%</span></div><div class="skill-bar"><div class="skill-fill" data-width="70" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Photoshop / Illustrator</span><span class="mono">85%</span></div><div class="skill-bar"><div class="skill-fill" data-width="85" style="background:linear-gradient(90deg,#3a1060,#c45bdd);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Excel / Office</span><span class="mono">90%</span></div><div class="skill-bar"><div class="skill-fill" data-width="90" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+            </div>
+            <div class="skills-col anim-up" style="animation-delay:.2s">
+                <h3 class="skills-col-title"><i class="fa-solid fa-brain"></i> Laborales</h3>
+                <div class="skill-item"><div class="skill-meta"><span>Comunicación</span><span class="mono">95%</span></div><div class="skill-bar"><div class="skill-fill" data-width="95" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Trabajo en equipo</span><span class="mono">85%</span></div><div class="skill-bar"><div class="skill-fill" data-width="85" style="background:linear-gradient(90deg,#1a4a2e,#3da668);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Creatividad</span><span class="mono">90%</span></div><div class="skill-bar"><div class="skill-fill" data-width="90" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Resolución de problemas</span><span class="mono">80%</span></div><div class="skill-bar"><div class="skill-fill" data-width="80" style="background:linear-gradient(90deg,#1a4a2e,#3da668);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Innovación</span><span class="mono">80%</span></div><div class="skill-bar"><div class="skill-fill" data-width="80" style="background:linear-gradient(90deg,#1a4a2e,#3da668);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Capacidad de escucha</span><span class="mono">95%</span></div><div class="skill-bar"><div class="skill-fill" data-width="95" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Dedicación</span><span class="mono">95%</span></div><div class="skill-bar"><div class="skill-fill" data-width="95" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Léxico y dicción</span><span class="mono">90%</span></div><div class="skill-bar"><div class="skill-fill" data-width="90" style="background:linear-gradient(90deg,#1a4a2e,#00e68a);"></div></div></div>
+                <div class="skill-item"><div class="skill-meta"><span>Inglés (Básico)</span><span class="mono">30%</span></div><div class="skill-bar"><div class="skill-fill" data-width="30" style="background:linear-gradient(90deg,#3a2a10,#c49a14);"></div></div></div>
+                <div class="tools-section">
+                    <h4 class="tools-title mono">// Herramientas & Frameworks</h4>
+                    <div class="tools-wrap">
+                        <span class="tool-badge geo"><i class="fa-solid fa-map"></i> QGIS</span>
+                        <span class="tool-badge geo"><i class="fa-solid fa-globe"></i> ArcGIS</span>
+                        <span class="tool-badge geo"><i class="fa-solid fa-drafting-compass"></i> AutoCAD</span>
+                        <span class="tool-badge dev"><i class="fa-brands fa-js"></i> JavaScript</span>
+                        <span class="tool-badge dev"><i class="fa-brands fa-html5"></i> HTML5/CSS3</span>
+                        <span class="tool-badge dev"><i class="fa-solid fa-database"></i> Supabase</span>
+                        <span class="tool-badge dev"><i class="fa-brands fa-android"></i> Capacitor</span>
+                        <span class="tool-badge dev"><i class="fa-brands fa-python"></i> Python</span>
+                        <span class="tool-badge design"><i class="fa-solid fa-pen-nib"></i> Photoshop</span>
+                        <span class="tool-badge design"><i class="fa-solid fa-bezier-curve"></i> Illustrator</span>
+                        <span class="tool-badge dev"><i class="fa-solid fa-table"></i> SQL</span>
+                        <span class="tool-badge dev"><i class="fa-brands fa-java"></i> Java / C#</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ CURRICULUM ═══════ -->
+<section id="curriculum" class="curriculum">
+    <div class="contenedor">
+        <div class="section-header">
+            <span class="section-tag mono">03 / CURRICULUM</span>
+            <h2 class="section-title">Trayectoria</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="timeline-grid">
+            <div class="timeline-col anim-left">
+                <h3 class="timeline-col-title"><i class="fa-solid fa-graduation-cap"></i> Educación</h3>
+                <div class="timeline">
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <div class="tl-card">
+                            <span class="tl-date mono">2024 – Presente</span>
+                            <h4>Lic. en Geografía</h4>
+                            <span class="tl-place">Universidad Central de Venezuela</span>
+                            <p>Formación en análisis geoespacial, cartografía, SIG y planificación territorial.</p>
+                            <div class="tl-tags"><span>SIG</span><span>Cartografía</span><span>QGIS</span></div>
                         </div>
-                        <div class="item izq">
-                            <h4>Técnico Especializado en Computación</h4>
-                            <span class="casa">Escuela Técnica Popular Don Bosco</span>
-                            <span class="fecha">2018 – 2019</span>
-                            <p></p>
-                            <div class="conectori">
-                                <div class="circuloi"></div>
-                            </div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <div class="tl-card">
+                            <span class="tl-date mono">2018 – 2019</span>
+                            <h4>Técnico en Computación</h4>
+                            <span class="tl-place">Esc. Técnica Popular Don Bosco</span>
+                            <p>Formación técnica especializada en programación, hardware y sistemas.</p>
+                            <div class="tl-tags"><span>Hardware</span><span>Programación</span></div>
                         </div>
-                        <div class="item izq">
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <div class="tl-card">
+                            <span class="tl-date mono">2013 – 2018</span>
                             <h4>Bachillerato</h4>
-                            <span class="casa">U.E.N José Félix Ribas</span>
-                            <span class="fecha">2013 – 2018</span>
-                            <p></p>
-                            <div class="conectori">
-                                <div class="circuloi"></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                      <div class="col derecha">
-                        <h3>Experiencia de trabajo</h3>
-                        
-                         <!-- SECCION PORTFOLIO 
-                        <div class="item der">
-
-                        
-                            <h4>Analista de Compensación y Beneficios</h4>
-                            <span class="casa">Zoom International Services, C.A.</span>
-                            <span class="fecha">2021 - 2023</span>
-                            <p></p>
-                            <div class="conectord">
-                                <div class="circulod"></div>
-                            </div>
-                        </div> -->
-                       
-                          <div class="item der">
-                            <h4>Web developer - Front</h4>
-                            <span class="casa">Triozon 50/45 C.A</span>
-                            <span class="fecha">2019 - 2020</span>
-                            <p></p>
-                            <div class="conectord">
-                                <div class="circulod"></div>
-                            </div>
-                        </div>
-                      <!-- 
-                        <div class="item der">
-                            <h4>
-                                Web developer - Front</h4>
-                            <span class="casa">
-                                Neo contact Experience C.A </span>
-                            <span class="fecha">2020 - 2021</span>
-                            <p></p>
-                            <div class="conectord">
-                                <div class="circulod"></div>
-                            </div>
-                        </div>  -->
-                        
-
-                    </div>  
-                    
-                </div>
-            </div>
-        </section>
-
-
-
-        <!-- SECCION PORTFOLIO -->
-        <section id="portfolio" class="portfolio">
-            <div class="contenido-seccion">
-                <h2>PORTAFOLIO</h2>
-                <div class="galeria">
-                    <div class="proyecto">
-                        <a href="https://github.com/jesusmorillo1247/Calculadora-en-Python.git" id="enlacegithub">
-                            <img src="img/p1.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Calculadora Python</h3>
-                                
-                            </div>
-                        </a>
-                    </div>
-
-
-                    <div class="proyecto">
-                        <a href="https://github.com/jesusmorillo1247/App-de-tareas-con-JavaScript.git"
-                            id="enlacegithub">
-                            <img src="img/p2.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Aplicacion de tareas JavaScript</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-
-                    <div class="proyecto">
-                        <a href="https://github.com/jesusmorillo1247/Game-Python.git" id="enlacegithub">
-                            <img src="img/p3.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Juego perspectiva top-down Python</h3>
-                                <p>
-
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://github.com/jesusmorillo1247/app-de-tiempo-con-JavaScript.git"
-                            id="enlacegithub">
-                            <img src="img/p4.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Aplicacion de estado del clima JavaScript</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://github.com/jesusmorillo1247/Analisis-de-datos-Netflix.git" id="enlacegithub">
-                            <img src="img/p6.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Análisis de datos Netflix (Python)</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://github.com/jesusmorillo1247/Calidad-del-aire-.git" id="enlacegithub">
-                            <img src="img/p8.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Análisis calidad del aire (Python) </h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://github.com/jesusmorillo1247/Automatizar-reportes-con-Python.git"
-                            id="enlacegithub">
-                            <img src="img/p9.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Automatizar reportes (Python)</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://github.com/JesusMorilloPortafolio/Detector-de-parkinson-con-python-.git"
-                            id="enlacegithub">
-                            <img src="img/p10.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Detector de Parkinson (Python)</h3>
-                                <p> </p>
-                            </div>
-                        </a>
-                    </div>
-
-
-
-
-
-        </section>
-
-        <section id="portfolio2" class="portfolio2">
-            <div class="contenido-seccion">
-                <h2>Conoce mis paginas web</h2>
-                <div class="galeria">
-                    <div class="proyecto">
-                        <a href="https://jesusmorilloportafolio.github.io/comida/#inicio" target="_blank" id="enlacegithub">
-                            <img src="img/f2.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Pagina web de restaurant</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://jesusmorilloportafolio.github.io/gym/" target="_blank" id="enlacegithub">
-                            <img src="img/f4.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Pagina web de GYM</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://jesusmorilloportafolio.github.io/viajes/" target="_blank" id="enlacegithub">
-                            <img src="img/f5.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Pagina web de viajes</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://jesusmorilloportafolio.github.io/tiendaZapatos/" target="_blank" id="enlacegithub">
-                            <img src="img/f6.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Pagina web para tiendas</h3>
-                                <p></p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://jesusmorilloportafolio.github.io/Empresa/" target="_blank" id="enlacegithub">
-                            <img src="img/f1.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Pagina web para empresa</h3>
-                                <p>Este sitio no es responsivo</p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="proyecto">
-                        <a href="https://jesusmorilloportafolio.github.io/Gamer/" target="_blank" id="enlacegithub">
-                            <img src="img/f3.jpg" alt="">
-                            <div class="overlay">
-                                <h3>Pagina web para presentar videojuegos</h3>
-                                <p>Este sitio no es responsivo</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
-
-        <!-- SECCION CONTACTO -->
-        <section id="contacto" class="contacto">
-            <div class="contenido-seccion" style="text-align: center;">
-                <h2>CONTACTO</h2>
-                <div class="fila">
-
-                    <!-- Mapa -->
-                    <div class="col">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125541.57957589239!2d-66.92214400254235!3d10.48691729549837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58adcd824807%3A0x93dd2eae0a998483!2sCaracas%2C%20Distrito%20Capital!5e0!3m2!1ses!2sve!4v1700712064805!5m2!1ses!2sve"
-                            width="250" height="190" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        <div class="info">
-                            <ul>
-                                <li>
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    Caracas, Venezuela
-                                </li>
-                                <li>
-                                    <i class="fa-solid fa-mobile-screen"></i>
-                                    Contacto: +58 0412-213-8280
-                                </li>
-                                <li>
-                                    <i class="fa-solid fa-envelope"></i>
-                                    Email: jesusmorillo507@gmail.com
-                                </li>
-                            </ul>
+                            <span class="tl-place">U.E.N José Félix Ribas</span>
+                            <p>Bachillerato en ciencias.</p>
+                            <div class="tl-tags"><span>Ciencias</span></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- footer -->
-        <footer>
-            <a href="#inicio" class="arriba">
-                <i class="fa-solid fa-angles-up"></i>
-            </a>
-            <div class="redes">
-                <a href="https://www.linkedin.com/in/jesus-morillo-a7b061192/"><i
-                        class="fa-brands fa-linkedin-in"></i></a>
+            <div class="timeline-col anim-right">
+                <h3 class="timeline-col-title"><i class="fa-solid fa-briefcase"></i> Experiencia</h3>
+                <div class="timeline">
+                    <div class="tl-item featured">
+                        <div class="tl-dot featured-dot"></div>
+                        <div class="tl-card featured-card">
+                            <span class="tl-badge">Actual</span>
+                            <span class="tl-date mono">2024 – Presente</span>
+                            <h4>Analista SIG & Consultor Geoespacial</h4>
+                            <span class="tl-place">Independiente · Freelance</span>
+                            <p>Producción de cartografía temática de alta precisión (geología, geomorfología, isoyetas) y modelos DEM para análisis de pendientes e identificación de zonas de riesgo.</p>
+                            <div class="tl-tags"><span>QGIS</span><span>ArcGIS</span><span>AutoCAD</span><span>DEM</span><span>Python</span></div>
+                        </div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <div class="tl-card">
+                            <span class="tl-date mono">2025 – 2026</span>
+                            <h4>Desarrollador Fullstack · "Roomie"</h4>
+                            <span class="tl-place">Proyecto Propio · Plataforma Inmobiliaria</span>
+                            <p>Desarrollo end-to-end de plataforma híbrida Android/Web. Chat en tiempo real, backend con Supabase y protocolo KYC para validación de transacciones.</p>
+                            <div class="tl-tags"><span>JavaScript</span><span>Supabase</span><span>Capacitor</span><span>Android</span></div>
+                        </div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-dot"></div>
+                        <div class="tl-card">
+                            <span class="tl-date mono">2019 – 2024</span>
+                            <h4>Técnico en Soporte Informático</h4>
+                            <span class="tl-place">Servicios Independientes</span>
+                            <p>Diagnóstico, reparación y mantenimiento de equipos. Recuperación de datos y atención personalizada con cartera estable a lo largo de 5 años.</p>
+                            <div class="tl-tags"><span>Hardware</span><span>Software</span><span>Soporte</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
+    </div>
+</section>
 
-        <script src="script.js"></script>
+<!-- ═══════ PORTFOLIO PYTHON ═══════ -->
+<section id="portfolio" class="portfolio">
+    <!-- Code-themed atmospheric effects -->
+    <div class="code-grid-bg"></div>
+    <div class="code-scanlines"></div>
+    <div class="code-terminal">
+        <div class="code-terminal-ring1"></div>
+        <div class="code-terminal-ring2"></div>
+        <div class="code-terminal-ring3"></div>
+        <div class="code-terminal-sweep"></div>
+    </div>
+    <div class="code-floats">
+        <span class="code-float">def solve():</span>
+        <span class="code-float">import numpy</span>
+        <span class="code-float">git push</span>
+        <span class="code-float">print("ok")</span>
+        <span class="code-float">{"data":[]}</span>
+    </div>
+
+    <div class="contenedor">
+        <div class="section-header">
+            <span class="section-tag mono">04 / PORTAFOLIO</span>
+            <h2 class="section-title">Proyectos Programacion</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="portfolio-grid">
+            <div class="pcard anim-up"><a href="https://github.com/jesusmorillo1247/Calculadora-en-Python.git" target="_blank"><div class="pcard-img"><img src="img/p1.jpg" alt="Calculadora"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python</span><h3>Calculadora Python</h3><p>Aplicación de cálculo construida con Python puro.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.1s"><a href="https://github.com/jesusmorillo1247/App-de-tareas-con-JavaScript.git" target="_blank"><div class="pcard-img"><img src="img/p2.jpg" alt="Tareas"></div><div class="pcard-overlay"><span class="pcard-tag mono">JavaScript</span><h3>App de Tareas JS</h3><p>Gestor de tareas con JavaScript vanilla.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.2s"><a href="https://github.com/jesusmorillo1247/Game-Python.git" target="_blank"><div class="pcard-img"><img src="img/p3.jpg" alt="Juego"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Pygame</span><h3>Juego Top-Down</h3><p>Videojuego con perspectiva top-down en Python.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.3s"><a href="https://github.com/jesusmorillo1247/app-de-tiempo-con-JavaScript.git" target="_blank"><div class="pcard-img"><img src="img/p4.jpg" alt="Clima"></div><div class="pcard-overlay"><span class="pcard-tag mono">JavaScript · API</span><h3>App del Clima JS</h3><p>Aplicación del estado del clima con API externa.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.4s"><a href="https://github.com/jesusmorillo1247/Analisis-de-datos-Netflix.git" target="_blank"><div class="pcard-img"><img src="img/p6.jpg" alt="Netflix"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Data</span><h3>Análisis Datos Netflix</h3><p>Análisis exploratorio del dataset de Netflix.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.5s"><a href="https://github.com/jesusmorillo1247/Calidad-del-aire-.git" target="_blank"><div class="pcard-img"><img src="img/p8.jpg" alt="Aire"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · GIS</span><h3>Calidad del Aire</h3><p>Análisis geoespacial de calidad del aire.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.6s"><a href="https://github.com/jesusmorillo1247/Automatizar-reportes-con-Python.git" target="_blank"><div class="pcard-img"><img src="img/p9.jpg" alt="Reportes"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Automation</span><h3>Automatizar Reportes</h3><p>Scripts para automatizar generación de reportes.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.7s"><a href="https://github.com/JesusMorilloPortafolio/Detector-de-parkinson-con-python-.git" target="_blank"><div class="pcard-img"><img src="img/p10.jpg" alt="Parkinson"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · ML</span><h3>Detector de Parkinson</h3><p>Modelo de machine learning para detección de Parkinson.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════ PROYECTOS SIG / GEOGRAFÍA ═══════ -->
+<section id="sig" class="portfolio portfolio-sig">
+    <!-- Atmospheric effects -->
+    <div class="sig-map-bg"></div>
+    <div class="sig-scanlines"></div>
+    <div class="sig-radar">
+        <div class="sig-radar-ring1"></div>
+        <div class="sig-radar-ring2"></div>
+        <div class="sig-radar-ring3"></div>
+        <div class="sig-radar-sweep"></div>
+    </div>
+
+    <div class="contenedor">
+        <div class="section-header">
+            <span class="section-tag mono">05 / SIG · GEOGRAFÍA</span>
+            <h2 class="section-title">Cartografía & SIG</h2>
+            <div class="title-line"></div>
+        </div>
+
+        <div class="portfolio-grid-sig">
+
+            <!-- ── PENDIENTE (con toggle 3D) ── -->
+            <div class="sig-card anim-up">
+                <div class="sig-img-wrap"
+                     data-title="Mapa de Pendiente" data-type="Pendiente · QGIS · ArcGIS"
+                     data-img="img/sig/Mapa_De_Pendiente.jpg"
+                     data-flat="img/sig/Mapa_De_Pendiente.jpg"
+                     data-3d="img/sig/Pendiente_mapa_3d.jpg">
+                    <img decoding="async" src="img/sig/Mapa_De_Pendiente.jpg" alt="Mapa de Pendiente">
+                    <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <span class="sig-map-type">Pendiente</span>
+                    <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
+                        <i class="fa-solid fa-cube"></i><span>3D</span>
+                    </button>
+                </div>
+                <div class="sig-body">
+                    <h3>N°1 — Mapa de Pendiente</h3>
+                    <div class="sig-tools">
+                        <span class="sig-tool">QGIS</span>
+                        <span class="sig-tool">ArcGIS</span>
+                        <span class="sig-tool">DEM</span>
+                        <span class="sig-tool has-3d"><i class="fa-solid fa-cube"></i> Vista 3D</span>
+                    </div>
+                    <div class="sig-actions">
+                        <button class="sig-btn view" onclick="openLightbox('img/sig/Mapa_De_Pendiente.jpg','N°1 — Mapa de Pendiente','Pendiente · QGIS · ArcGIS',0)"><i class="fa-solid fa-expand"></i> Ver mapa</button>
+                        <a href="img/sig/Mapa_De_Pendiente.jpg" download class="sig-btn download"><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── UNIDADES GEOMORFOLÓGICAS (con toggle 3D) ── -->
+            <div class="sig-card anim-up" style="animation-delay:.1s">
+                <div class="sig-img-wrap"
+                     data-title="Mapa de Unidades Geomorfológicas" data-type="Geomorfología · QGIS · ArcGIS"
+                     data-img="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg"
+                     data-flat="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg"
+                     data-3d="img/sig/Geomorfologia_mapa_3d.jpg">
+                    <img decoding="async" src="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg" alt="Mapa de Unidades Geomorfológicas">
+                    <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <span class="sig-map-type">Geomorfología</span>
+                    <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
+                        <i class="fa-solid fa-cube"></i><span>3D</span>
+                    </button>
+                </div>
+                <div class="sig-body">
+                    <h3>N°2 — Unidades Geomorfológicas</h3>
+                    <div class="sig-tools">
+                        <span class="sig-tool">QGIS</span>
+                        <span class="sig-tool">ArcGIS</span>
+                        <span class="sig-tool">Vectorial</span>
+                        <span class="sig-tool has-3d"><i class="fa-solid fa-cube"></i> Vista 3D</span>
+                    </div>
+                    <div class="sig-actions">
+                        <button class="sig-btn view" onclick="openLightbox('img/sig/Mapa_de_Unidades_Geomorfologicas.jpg','N°2 — Unidades Geomorfológicas','Geomorfología · QGIS · ArcGIS',1)"><i class="fa-solid fa-expand"></i> Ver mapa</button>
+                        <a href="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg" download class="sig-btn download"><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── GEOLÓGICO (con toggle 3D) ── -->
+            <div class="sig-card anim-up" style="animation-delay:.2s">
+                <div class="sig-img-wrap"
+                     data-title="Mapa Geológico" data-type="Geología · QGIS · ArcGIS"
+                     data-img="img/sig/Mapa_Geologico.jpg"
+                     data-flat="img/sig/Mapa_Geologico.jpg"
+                     data-3d="img/sig/Geologia_mapa_3d.jpg">
+                    <img decoding="async" src="img/sig/Mapa_Geologico.jpg" alt="Mapa Geológico">
+                    <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <span class="sig-map-type">Geología</span>
+                    <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
+                        <i class="fa-solid fa-cube"></i><span>3D</span>
+                    </button>
+                </div>
+                <div class="sig-body">
+                    <h3>N°3 — Mapa Geológico</h3>
+                    <div class="sig-tools">
+                        <span class="sig-tool">QGIS</span>
+                        <span class="sig-tool">ArcGIS</span>
+                        <span class="sig-tool">Vectorial</span>
+                        <span class="sig-tool has-3d"><i class="fa-solid fa-cube"></i> Vista 3D</span>
+                    </div>
+                    <div class="sig-actions">
+                        <button class="sig-btn view" onclick="openLightbox('img/sig/Mapa_Geologico.jpg','N°3 — Mapa Geológico','Geología · QGIS · ArcGIS',2)"><i class="fa-solid fa-expand"></i> Ver mapa</button>
+                        <a href="img/sig/Mapa_Geologico.jpg" download class="sig-btn download"><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── ISOYETAS (sin 3D) ── -->
+            <div class="sig-card anim-up" style="animation-delay:.3s">
+                <div class="sig-img-wrap"
+                     data-title="Mapa de Isoyetas" data-type="Isoyetas · QGIS · Python"
+                     data-img="img/sig/Mapa_de_Isoyetas.jpg">
+                    <img decoding="async" src="img/sig/Mapa_de_Isoyetas.jpg" alt="Mapa de Isoyetas">
+                    <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <span class="sig-map-type">Isoyetas</span>
+                </div>
+                <div class="sig-body">
+                    <h3>N°4 — Mapa de Isoyetas</h3>
+                    <div class="sig-tools">
+                        <span class="sig-tool">QGIS</span>
+                        <span class="sig-tool">Python</span>
+                        <span class="sig-tool">Interpolación</span>
+                    </div>
+                    <div class="sig-actions">
+                        <button class="sig-btn view" onclick="openLightbox('img/sig/Mapa_de_Isoyetas.jpg','N°4 — Mapa de Isoyetas','Isoyetas · QGIS · Python',3)"><i class="fa-solid fa-expand"></i> Ver mapa</button>
+                        <a href="img/sig/Mapa_de_Isoyetas.jpg" download class="sig-btn download"><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── ALTIMETRÍA (con toggle 3D) ── -->
+            <div class="sig-card anim-up" style="animation-delay:.4s">
+                <div class="sig-img-wrap"
+                     data-title="Mapa de Altimetría" data-type="Altimetría · QGIS · ArcGIS"
+                     data-img="img/sig/Mapa_de_Altimetria.jpg"
+                     data-flat="img/sig/Mapa_de_Altimetria.jpg"
+                     data-3d="img/sig/Altimetria_3d.jpg">
+                    <img decoding="async" src="img/sig/Mapa_de_Altimetria.jpg" alt="Mapa de Altimetría">
+                    <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <span class="sig-map-type">Altimetría</span>
+                    <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
+                        <i class="fa-solid fa-cube"></i><span>3D</span>
+                    </button>
+                </div>
+                <div class="sig-body">
+                    <h3>N°0 — Mapa de Altimetría</h3>
+                    <div class="sig-tools">
+                        <span class="sig-tool">QGIS</span>
+                        <span class="sig-tool">ArcGIS</span>
+                        <span class="sig-tool">Raster</span>
+                        <span class="sig-tool has-3d"><i class="fa-solid fa-cube"></i> Vista 3D</span>
+                    </div>
+                    <div class="sig-actions">
+                        <button class="sig-btn view" onclick="openLightbox('img/sig/Mapa_de_Altimetria.jpg','N°0 — Mapa de Altimetría','Altimetría · QGIS · ArcGIS',4)"><i class="fa-solid fa-expand"></i> Ver mapa</button>
+                        <a href="img/sig/Mapa_de_Altimetria.jpg" download class="sig-btn download"><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── ESTABILIDAD DEL PAISAJE (sin 3D) ── -->
+            <div class="sig-card anim-up" style="animation-delay:.5s">
+                <div class="sig-img-wrap"
+                     data-title="Mapa de Estabilidad del Paisaje" data-type="Estabilidad · QGIS · ArcGIS"
+                     data-img="img/sig/Mapa_de_Estabilidad_del_paisaje.jpg">
+                    <img decoding="async" src="img/sig/Mapa_de_Estabilidad_del_paisaje.jpg" alt="Mapa de Estabilidad del Paisaje">
+                    <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <span class="sig-map-type">Estabilidad</span>
+                </div>
+                <div class="sig-body">
+                    <h3>N°5 — Estabilidad del Paisaje</h3>
+                    <div class="sig-tools">
+                        <span class="sig-tool">QGIS</span>
+                        <span class="sig-tool">ArcGIS</span>
+                        <span class="sig-tool">Análisis</span>
+                    </div>
+                    <div class="sig-actions">
+                        <button class="sig-btn view" onclick="openLightbox('img/sig/Mapa_de_Estabilidad_del_paisaje.jpg','N°5 — Estabilidad del Paisaje','Estabilidad · QGIS · ArcGIS',5)"><i class="fa-solid fa-expand"></i> Ver mapa</button>
+                        <a href="img/sig/Mapa_de_Estabilidad_del_paisaje.jpg" download class="sig-btn download"><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════ PORTFOLIO WEB ═══════ -->
+<section id="portfolio2" class="portfolio portfolio-web">
+    <div class="contenedor">
+        <div class="section-header">
+            <span class="section-tag mono">06 / PÁGINAS WEB</span>
+            <h2 class="section-title">Sitios Web</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="portfolio-grid portfolio-grid-web">
+            <div class="pcard anim-up"><a href="https://jesusmorilloportafolio.github.io/comida/#inicio" target="_blank"><div class="pcard-img"><img src="img/f2.jpg" alt="Restaurant"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Restaurant</h3><p>Sitio responsivo para restaurante.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.1s"><a href="https://jesusmorilloportafolio.github.io/gym/" target="_blank"><div class="pcard-img"><img src="img/f4.jpg" alt="GYM"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de GYM</h3><p>Sitio responsivo para gimnasio.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.2s"><a href="https://jesusmorilloportafolio.github.io/viajes/" target="_blank"><div class="pcard-img"><img src="img/f5.jpg" alt="Viajes"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Viajes</h3><p>Sitio de agencia de viajes.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.3s"><a href="https://jesusmorilloportafolio.github.io/tiendaZapatos/" target="_blank"><div class="pcard-img"><img src="img/f6.jpg" alt="Tienda"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Tienda Online</h3><p>Web para tienda de calzado.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.4s"><a href="https://jesusmorilloportafolio.github.io/Empresa/" target="_blank"><div class="pcard-img"><img src="img/f1.jpg" alt="Empresa"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web Corporativa</h3><p>Sitio web para empresa.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.5s"><a href="https://jesusmorilloportafolio.github.io/Gamer/" target="_blank"><div class="pcard-img"><img src="img/f3.jpg" alt="Gamer"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Videojuegos</h3><p>Sitio para presentar videojuegos.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════ CONTACTO ═══════ -->
+<section id="contacto" class="contacto">
+    <div class="contenedor">
+        <div class="section-header">
+            <span class="section-tag mono">07 / CONTACTO</span>
+            <h2 class="section-title">Hablemos</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="contact-layout">
+            <div class="contact-left anim-left">
+                <p class="contact-intro">¿Tienes un proyecto en mente? ¿Necesitas cartografía, un sitio web o una app? Escríbeme — siempre estoy dispuesto a colaborar.</p>
+                <div class="contact-items">
+                    <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-location-dot"></i></div><div class="ci-text"><span class="ci-label">Ubicación</span><span class="ci-val">Caracas, Venezuela</span></div></div>
+                    <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-mobile-screen"></i></div><div class="ci-text"><span class="ci-label">Teléfono / WhatsApp</span><span class="ci-val">+58 0412-213-8280</span></div></div>
+                    <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-envelope"></i></div><div class="ci-text"><span class="ci-label">Email</span><a href="mailto:jesusmorillo507@gmail.com" class="ci-val ci-link">jesusmorillo507@gmail.com</a></div></div>
+                    <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-globe"></i></div><div class="ci-text"><span class="ci-label">Portafolio</span><a href="https://jesusmorilloportafolio.github.io" target="_blank" class="ci-val ci-link">jesusmorilloportafolio.github.io</a></div></div>
+                </div>
+                <div class="contact-socials">
+                    <a href="https://www.linkedin.com/in/jesus-morillo-a7b061192/" target="_blank" class="csocial"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://api.whatsapp.com/send?phone=5804122138280" target="_blank" class="csocial"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                    <a href="https://github.com/JesusMorilloPortafolio" target="_blank" class="csocial"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+            </div>
+            <div class="contact-right anim-right">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125541.57957589239!2d-66.92214400254235!3d10.48691729549837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58adcd824807%3A0x93dd2eae0a998483!2sCaracas%2C%20Distrito%20Capital!5e0!3m2!1ses!2sve!4v1700712064805!5m2!1ses!2sve"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <a href="#inicio" class="back-top"><i class="fa-solid fa-angles-up"></i></a>
+    <div class="footer-redes">
+        <a href="https://www.linkedin.com/in/jesus-morillo-a7b061192/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://api.whatsapp.com/send?phone=5804122138280" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://github.com/JesusMorilloPortafolio" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:jesusmorillo507@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+    <p class="footer-copy">© 2025 Jesus Morillo — Geografía · Python · Dev</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
-
-
 </html>
