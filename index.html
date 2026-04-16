@@ -30,6 +30,21 @@
     </div>
 </div>
 
+
+<!-- ROOMIE GALLERY LIGHTBOX -->
+<div class="lightbox-overlay" id="roomie-lightbox">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" id="rlbClose"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lightbox-nav prev" id="rlbPrev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lightbox-nav next" id="rlbNext"><i class="fa-solid fa-chevron-right"></i></button>
+        <img class="lightbox-img roomie-lb-img" id="rlbImg" src="" alt="">
+        <div class="lightbox-caption">
+            <strong id="rlbTitle">Roomie — App Android</strong>
+            <span id="rlbType"></span>
+        </div>
+    </div>
+</div>
+
 <!-- NAVBAR -->
 <header class="navbar" id="navbar">
     <div class="nav-container">
@@ -381,6 +396,24 @@
             <div class="title-line"></div>
         </div>
         <div class="portfolio-grid">
+            <div class="pcard pcard-roomie anim-up" onclick="openRoomieGallery()" style="cursor:pointer;">
+                <div class="pcard-img pcard-img-roomie">
+                    <img src="img/roomie/roomie_splash.jpg" alt="Roomie App">
+                    <div class="roomie-blur-bg"></div>
+                    <div class="roomie-screens">
+                        <img src="img/roomie/roomie_home1.jpg" class="rscreen rs1" alt="">
+                        <img src="img/roomie/roomie_map.jpg" class="rscreen rs2" alt="">
+                        <img src="img/roomie/roomie_profile.jpg" class="rscreen rs3" alt="">
+                    </div>
+                    <div class="roomie-badge"><i class="fa-brands fa-android"></i> Android</div>
+                </div>
+                <div class="pcard-overlay">
+                    <span class="pcard-tag mono">HTML · CSS · JS · Capacitor</span>
+                    <h3>Roomie — App Android</h3>
+                    <p>Plataforma híbrida de alquiler de habitaciones estudiantiles con chat en tiempo real, mapas y KYC.</p>
+                    <span class="pcard-link roomie-gallery-link"><i class="fa-solid fa-images"></i> Ver galería (13 pantallas)</span>
+                </div>
+            </div>
             <div class="pcard anim-up"><a href="https://github.com/jesusmorillo1247/Calculadora-en-Python.git" target="_blank"><div class="pcard-img"><img src="img/p1.jpg" alt="Calculadora"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python</span><h3>Calculadora Python</h3><p>Aplicación de cálculo construida con Python puro.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
             <div class="pcard anim-up" style="animation-delay:.1s"><a href="https://github.com/jesusmorillo1247/App-de-tareas-con-JavaScript.git" target="_blank"><div class="pcard-img"><img src="img/p2.jpg" alt="Tareas"></div><div class="pcard-overlay"><span class="pcard-tag mono">JavaScript</span><h3>App de Tareas JS</h3><p>Gestor de tareas con JavaScript vanilla.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
             <div class="pcard anim-up" style="animation-delay:.2s"><a href="https://github.com/jesusmorillo1247/Game-Python.git" target="_blank"><div class="pcard-img"><img src="img/p3.jpg" alt="Juego"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Pygame</span><h3>Juego Top-Down</h3><p>Videojuego con perspectiva top-down en Python.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
