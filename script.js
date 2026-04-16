@@ -282,3 +282,63 @@ function toggleView3D(btn, e) {
             : 'Vista 3D';
     }
 }
+
+// ── ROOMIE GALLERY LIGHTBOX ──
+const roomieImages = [
+    { src: 'img/roomie/roomie_splash.jpg',        label: '' },
+    { src: 'img/roomie/roomie_home1.jpg',         label: '' },
+    { src: 'img/roomie/roomie_home2.jpg',         label: '' },
+    { src: 'img/roomie/roomie_home3.jpg',         label: '' },
+    { src: 'img/roomie/roomie_map.jpg',           label: '' },
+    { src: 'img/roomie/roomie_room_detail.jpg',   label: '' },
+    { src: 'img/roomie/roomie_search.jpg',        label: '' },
+    { src: 'img/roomie/roomie_profile.jpg',       label: '' },
+    { src: 'img/roomie/roomie_notifications.jpg', label: '' },
+    { src: 'img/roomie/roomie_messages.jpg',      label: '' },
+    { src: 'img/roomie/roomie_chat.jpg',          label: '' },
+    { src: 'img/roomie/roomie_detail.jpg',        label: '' },
+    { src: 'img/roomie/roomie_home4.jpg',         label: '' },
+];
+
+let rlbCurrent = 0;
+
+function openRoomieGallery(idx = 0) {
+    rlbCurrent = idx;
+    const lb = document.getElementById('roomie-lightbox');
+    const img = document.getElementById('rlbImg');
+    const lbl = document.getElementById('rlbType');
+    img.src = roomieImages[rlbCurrent].src;
+    lbl.textContent = roomieImages[rlbCurrent].label;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeRoomieGallery() {
+    document.getElementById('roomie-lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function rlbNavigate(dir) {
+    rlbCurrent = (rlbCurrent + dir + roomieImages.length) % roomieImages.length;
+    const img = document.getElementById('rlbImg');
+    img.style.opacity = '0';
+    setTimeout(() => {
+        img.src = roomieImages[rlbCurrent].src;
+        document.getElementById('rlbType').textContent = roomieImages[rlbCurrent].label;
+        img.style.opacity = '1';
+    }, 200);
+    img.style.transition = 'opacity 0.2s ease';
+}
+
+document.getElementById('rlbClose').addEventListener('click', closeRoomieGallery);
+document.getElementById('rlbPrev').addEventListener('click', () => rlbNavigate(-1));
+document.getElementById('rlbNext').addEventListener('click', () => rlbNavigate(1));
+document.getElementById('roomie-lightbox').addEventListener('click', e => {
+    if (e.target === document.getElementById('roomie-lightbox')) closeRoomieGallery();
+});
+document.addEventListener('keydown', e => {
+    if (!document.getElementById('roomie-lightbox').classList.contains('active')) return;
+    if (e.key === 'Escape')     closeRoomieGallery();
+    if (e.key === 'ArrowLeft')  rlbNavigate(-1);
+    if (e.key === 'ArrowRight') rlbNavigate(1);
+});
