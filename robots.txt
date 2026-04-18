@@ -1,0 +1,8 @@
+# robots.txt — Jesus Morillo Portafolio
+# https://jesusmorilloportafolio.github.io
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jesusmorilloportafolio.github.io/sitemap.xml
