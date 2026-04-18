@@ -342,3 +342,209 @@ document.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft')  rlbNavigate(-1);
     if (e.key === 'ArrowRight') rlbNavigate(1);
 });
+
+/* ================================================
+   NUEVAS FUNCIONALIDADES — v3
+   Preloader · Tema · Partículas · Formulario
+   ================================================ */
+
+// ── PRELOADER ──
+(function () {
+    const preloader = document.getElementById('preloader');
+    const plBar = document.getElementById('plBar');
+    if (!preloader) return;
+
+    let progress = 0;
+    const tick = setInterval(() => {
+        progress += Math.random() * 14 + 4;
+        if (progress >= 90) { progress = 90; clearInterval(tick); }
+        if (plBar) plBar.style.width = progress + '%';
+    }, 110);
+
+    function hideLoader() {
+        if (plBar) plBar.style.width = '100%';
+        clearInterval(tick);
+        setTimeout(() => preloader.classList.add('hidden'), 550);
+    }
+
+    window.addEventListener('load', hideLoader);
+    // Fallback — never block for more than 4 s
+    setTimeout(hideLoader, 4000);
+})();
+
+// ── THEME TOGGLE ──
+(function () {
+    const btn  = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    if (!btn) return;
+
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-mode');
+            icon.className = 'fa-solid fa-sun';
+        } else {
+            document.body.classList.remove('light-mode');
+            icon.className = 'fa-solid fa-moon';
+        }
+    }
+
+    // Apply saved preference immediately (before paint)
+    applyTheme(localStorage.getItem('jm-theme') || 'dark');
+
+    btn.addEventListener('click', () => {
+        const isLight = document.body.classList.contains('light-mode');
+        const next = isLight ? 'dark' : 'light';
+        localStorage.setItem('jm-theme', next);
+        applyTheme(next);
+    });
+})();
+
+// ── HERO CANVAS PARTICLES ──
+(function () {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const snippets = [
+        'import geopandas as gpd', 'def process_raster():', 'lat: 10.4869°N',
+        'lon: 66.8792°W', 'SELECT ST_Area(geom)', 'map.addLayer(tiles)',
+        'EPSG:4326', '<Polygon>', 'python geo_analysis.py',
+        'const map = L.map("id")', 'DEM · SRTM', 'raster.clip(mask)',
+        'UTM Zone 20N', '{ "type": "Feature" }', 'import numpy as np',
+        'WGS84 · GRS80', 'NDVI=(NIR−R)/(NIR+R)', 'db.postgis.query()',
+        'await supabase.from()', 'CartoDB Positron', 'DATUM: WGS84',
+        'ArcGIS.Rest.Layer()', 'ESCALA 1:25.000', 'git push origin main',
+        'PROYECCIÓN MERCATOR', '.shp · .geojson · .tif',
+    ];
+
+    function resize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width  = rect.width  || window.innerWidth;
+        canvas.height = rect.height || window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const count = window.innerWidth < 600 ? 14 : 26;
+    const particles = Array.from({ length: count }, () => makeParticle(true));
+
+    function makeParticle(randomY) {
+        return {
+            x:      Math.random() * canvas.width,
+            y:      randomY ? Math.random() * canvas.height : canvas.height + 20,
+            text:   snippets[Math.floor(Math.random() * snippets.length)],
+            vx:     (Math.random() - 0.5) * 0.22,
+            vy:     -(Math.random() * 0.18 + 0.06),
+            opacity:     0,
+            targetOpacity: Math.random() * 0.15 + 0.04,
+            fadeSpeed: Math.random() * 0.0025 + 0.001,
+            fadingIn:  true,
+            life: 0,
+            maxLife: Math.random() * 500 + 250,
+        };
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "400 10.5px 'JetBrains Mono', monospace";
+
+        particles.forEach((p, i) => {
+            p.life++;
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.fadingIn) {
+                p.opacity = Math.min(p.opacity + p.fadeSpeed, p.targetOpacity);
+                if (p.opacity >= p.targetOpacity) p.fadingIn = false;
+            } else if (p.life > p.maxLife * 0.65) {
+                p.opacity = Math.max(p.opacity - p.fadeSpeed * 0.8, 0);
+            }
+
+            if (p.life > p.maxLife || (p.opacity <= 0 && !p.fadingIn)) {
+                particles[i] = makeParticle(false);
+                return;
+            }
+
+            // Wrap horizontally
+            if (p.x < -200) p.x = canvas.width + 100;
+            if (p.x > canvas.width + 200) p.x = -100;
+
+            const isLight = document.body.classList.contains('light-mode');
+            ctx.fillStyle = isLight ? `rgba(0,127,68,1)` : `rgba(0,230,138,1)`;
+            ctx.globalAlpha = p.opacity;
+            ctx.fillText(p.text, p.x, p.y);
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+})();
+
+// ── CONTACT FORM ──
+(function () {
+    const form      = document.getElementById('contactForm');
+    if (!form) return;
+    const btn       = document.getElementById('cfSubmit');
+    const btnText   = document.getElementById('cfBtnText');
+    const btnLoad   = document.getElementById('cfBtnLoading');
+    const status    = document.getElementById('cfStatus');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Guard: remind user to set real Formspree endpoint
+        if (form.action.includes('YOUR_FORM_ID')) {
+            status.textContent = '⚠ Configura tu endpoint Formspree en el atributo action del form.';
+            status.className = 'cf-status error';
+            return;
+        }
+
+        btn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoad.style.display  = 'inline-flex';
+        status.textContent = '';
+        status.className   = 'cf-status';
+
+        try {
+            const res = await fetch(form.action, {
+                method:  'POST',
+                body:    new FormData(form),
+                headers: { 'Accept': 'application/json' },
+            });
+
+            if (res.ok) {
+                status.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Mensaje enviado! Te respondo pronto.';
+                status.className = 'cf-status success';
+                form.reset();
+            } else {
+                const data = await res.json();
+                throw new Error(data?.errors?.[0]?.message || 'Error del servidor');
+            }
+        } catch (err) {
+            status.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Error al enviar. Escríbeme a <a href="mailto:jesusmorillo507@gmail.com" style="color:inherit;text-decoration:underline">jesusmorillo507@gmail.com</a>';
+            status.className = 'cf-status error';
+        } finally {
+            btn.disabled = false;
+            btnText.style.display  = 'inline-flex';
+            btnLoad.style.display  = 'none';
+        }
+    });
+})();
+// ── AÑO DINÁMICO ──
+(function(){ const e=document.getElementById('footerYear'); if(e) e.textContent=new Date().getFullYear(); })();
+
+// ── COPIAR AL PORTAPAPELES ──
+document.querySelectorAll('.ci-copy-btn').forEach(btn => {
+    btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        const text = btn.closest('.ci-copyable')?.getAttribute('data-copy');
+        if (!text) return;
+        try { await navigator.clipboard.writeText(text); }
+        catch { const t=document.createElement('textarea'); t.value=text; t.style='position:fixed;opacity:0'; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+        const icon=btn.querySelector('i'), prev=icon.className;
+        icon.className='fa-solid fa-check'; btn.classList.add('copied');
+        setTimeout(()=>{ icon.className=prev; btn.classList.remove('copied'); }, 2000);
+    });
+});
