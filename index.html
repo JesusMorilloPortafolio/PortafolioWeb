@@ -5,13 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jesus Morillo — Geografía · Python · Dev</title>
+
+    <!-- ── SEO ── -->
+    <meta name="description" content="Portafolio de Jesus Morillo — Geógrafo, Cartógrafo, Python Developer y Analista SIG/GIS. Desarrollo Fullstack, apps Android y consultoría geoespacial en Caracas, Venezuela.">
+    <meta name="keywords" content="Jesus Morillo, portafolio, geografía, cartografía, Python, QGIS, ArcGIS, desarrollador fullstack, SIG, GIS, Android, Venezuela, Caracas">
+    <meta name="author" content="Jesus Morillo">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jesusmorilloportafolio.github.io">
+
+    <!-- ── Open Graph (LinkedIn, WhatsApp, Facebook) ── -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://jesusmorilloportafolio.github.io">
+    <meta property="og:title"       content="Jesus Morillo — Geografía · Python · Dev">
+    <meta property="og:description" content="Perfil híbrido entre desarrollo de software y análisis geoespacial. Geógrafo, Python Dev, Fullstack & Cartógrafo.">
+    <meta property="og:image"       content="https://jesusmorilloportafolio.github.io/img/jesus.jpg">
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale"      content="es_VE">
+    <meta property="og:site_name"   content="Jesus Morillo Portafolio">
+
+    <!-- ── Twitter Card ── -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="Jesus Morillo — Geografía · Python · Dev">
+    <meta name="twitter:description" content="Perfil híbrido: GIS · Python · Fullstack · Android · Cartografía.">
+    <meta name="twitter:image"       content="https://jesusmorilloportafolio.github.io/img/jesus.jpg">
+
+    <!-- ── Favicon ── -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon"        href="favicon.svg">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilo.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Jesus Morillo","url":"https://jesusmorilloportafolio.github.io","image":"https://jesusmorilloportafolio.github.io/img/jesus.jpg","jobTitle":"Geógrafo & Desarrollador Fullstack","email":"jesusmorillo507@gmail.com","telephone":"+58-0412-213-8280","address":{"@type":"PostalAddress","addressLocality":"Caracas","addressCountry":"VE"},"sameAs":["https://www.linkedin.com/in/jesus-morillo-a7b061192/","https://github.com/JesusMorilloPortafolio"]}</script>
 </head>
 <body>
+
+<!-- ═══════ PRELOADER ═══════ -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="pl-rings">
+            <div class="pl-ring pl-ring-1"></div>
+            <div class="pl-ring pl-ring-2"></div>
+            <div class="pl-ring pl-ring-3"></div>
+        </div>
+        <div class="pl-logo">JM<span>.</span></div>
+        <div class="pl-bar-wrap">
+            <div class="pl-bar" id="plBar"></div>
+        </div>
+        <span class="pl-text mono">// Cargando portafolio...</span>
+    </div>
+</div>
 
 <div class="cursor-glow" id="cursorGlow"></div>
 <div class="scroll-progress" id="scrollProgress"></div>
@@ -64,12 +110,17 @@
         <div class="nav-toggle" onclick="mostrarOcultarMenu()" id="navToggle">
             <span></span><span></span><span></span>
         </div>
+        <button class="theme-toggle" id="themeToggle" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
     </div>
 </header>
 
 <!-- ═══════ HERO ═══════ -->
 <section id="inicio" class="hero">
     <div class="hero-bg">
+        <!-- Floating code/geo particles canvas -->
+        <canvas id="heroCanvas" class="hero-canvas"></canvas>
         <!-- Map coordinate grid -->
         <div class="map-grid"></div>
 
@@ -398,12 +449,12 @@
         <div class="portfolio-grid">
             <div class="pcard pcard-roomie anim-up" onclick="openRoomieGallery()" style="cursor:pointer;">
                 <div class="pcard-img pcard-img-roomie">
-                    <img src="img/roomie/roomie_splash.jpg" alt="Roomie App">
+                    <img src="img/roomie/roomie_splash.jpg" alt="Roomie App" loading="lazy">
                     <div class="roomie-blur-bg"></div>
                     <div class="roomie-screens">
-                        <img src="img/roomie/roomie_home1.jpg" class="rscreen rs1" alt="">
-                        <img src="img/roomie/roomie_map.jpg" class="rscreen rs2" alt="">
-                        <img src="img/roomie/roomie_profile.jpg" class="rscreen rs3" alt="">
+                        <img src="img/roomie/roomie_home1.jpg" class="rscreen rs1" alt="" loading="lazy">
+                        <img src="img/roomie/roomie_map.jpg" class="rscreen rs2" alt="" loading="lazy">
+                        <img src="img/roomie/roomie_profile.jpg" class="rscreen rs3" alt="" loading="lazy">
                     </div>
                     <div class="roomie-badge"><i class="fa-brands fa-android"></i> Android</div>
                 </div>
@@ -414,14 +465,14 @@
                     <span class="pcard-link roomie-gallery-link"><i class="fa-solid fa-images"></i> Ver galería (13 pantallas)</span>
                 </div>
             </div>
-            <div class="pcard anim-up"><a href="https://github.com/jesusmorillo1247/Calculadora-en-Python.git" target="_blank"><div class="pcard-img"><img src="img/p1.jpg" alt="Calculadora"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python</span><h3>Calculadora Python</h3><p>Aplicación de cálculo construida con Python puro.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.1s"><a href="https://github.com/jesusmorillo1247/App-de-tareas-con-JavaScript.git" target="_blank"><div class="pcard-img"><img src="img/p2.jpg" alt="Tareas"></div><div class="pcard-overlay"><span class="pcard-tag mono">JavaScript</span><h3>App de Tareas JS</h3><p>Gestor de tareas con JavaScript vanilla.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.2s"><a href="https://github.com/jesusmorillo1247/Game-Python.git" target="_blank"><div class="pcard-img"><img src="img/p3.jpg" alt="Juego"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Pygame</span><h3>Juego Top-Down</h3><p>Videojuego con perspectiva top-down en Python.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.3s"><a href="https://github.com/jesusmorillo1247/app-de-tiempo-con-JavaScript.git" target="_blank"><div class="pcard-img"><img src="img/p4.jpg" alt="Clima"></div><div class="pcard-overlay"><span class="pcard-tag mono">JavaScript · API</span><h3>App del Clima JS</h3><p>Aplicación del estado del clima con API externa.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.4s"><a href="https://github.com/jesusmorillo1247/Analisis-de-datos-Netflix.git" target="_blank"><div class="pcard-img"><img src="img/p6.jpg" alt="Netflix"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Data</span><h3>Análisis Datos Netflix</h3><p>Análisis exploratorio del dataset de Netflix.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.5s"><a href="https://github.com/jesusmorillo1247/Calidad-del-aire-.git" target="_blank"><div class="pcard-img"><img src="img/p8.jpg" alt="Aire"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · GIS</span><h3>Calidad del Aire</h3><p>Análisis geoespacial de calidad del aire.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.6s"><a href="https://github.com/jesusmorillo1247/Automatizar-reportes-con-Python.git" target="_blank"><div class="pcard-img"><img src="img/p9.jpg" alt="Reportes"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Automation</span><h3>Automatizar Reportes</h3><p>Scripts para automatizar generación de reportes.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.7s"><a href="https://github.com/JesusMorilloPortafolio/Detector-de-parkinson-con-python-.git" target="_blank"><div class="pcard-img"><img src="img/p10.jpg" alt="Parkinson"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · ML</span><h3>Detector de Parkinson</h3><p>Modelo de machine learning para detección de Parkinson.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up"><a href="https://github.com/jesusmorillo1247/Calculadora-en-Python.git" target="_blank"><div class="pcard-img"><img src="img/p1.jpg" alt="Calculadora" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python</span><h3>Calculadora Python</h3><p>Aplicación de cálculo construida con Python puro.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.1s"><a href="https://github.com/jesusmorillo1247/App-de-tareas-con-JavaScript.git" target="_blank"><div class="pcard-img"><img src="img/p2.jpg" alt="Tareas" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">JavaScript</span><h3>App de Tareas JS</h3><p>Gestor de tareas con JavaScript vanilla.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.2s"><a href="https://github.com/jesusmorillo1247/Game-Python.git" target="_blank"><div class="pcard-img"><img src="img/p3.jpg" alt="Juego" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Pygame</span><h3>Juego Top-Down</h3><p>Videojuego con perspectiva top-down en Python.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.3s"><a href="https://github.com/jesusmorillo1247/app-de-tiempo-con-JavaScript.git" target="_blank"><div class="pcard-img"><img src="img/p4.jpg" alt="Clima" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">JavaScript · API</span><h3>App del Clima JS</h3><p>Aplicación del estado del clima con API externa.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.4s"><a href="https://github.com/jesusmorillo1247/Analisis-de-datos-Netflix.git" target="_blank"><div class="pcard-img"><img src="img/p6.jpg" alt="Netflix" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Data</span><h3>Análisis Datos Netflix</h3><p>Análisis exploratorio del dataset de Netflix.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.5s"><a href="https://github.com/jesusmorillo1247/Calidad-del-aire-.git" target="_blank"><div class="pcard-img"><img src="img/p8.jpg" alt="Aire" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · GIS</span><h3>Calidad del Aire</h3><p>Análisis geoespacial de calidad del aire.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.6s"><a href="https://github.com/jesusmorillo1247/Automatizar-reportes-con-Python.git" target="_blank"><div class="pcard-img"><img src="img/p9.jpg" alt="Reportes" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · Automation</span><h3>Automatizar Reportes</h3><p>Scripts para automatizar generación de reportes.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.7s"><a href="https://github.com/JesusMorilloPortafolio/Detector-de-parkinson-con-python-.git" target="_blank"><div class="pcard-img"><img src="img/p10.jpg" alt="Parkinson" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">Python · ML</span><h3>Detector de Parkinson</h3><p>Modelo de machine learning para detección de Parkinson.</p><span class="pcard-link"><i class="fa-brands fa-github"></i> Ver en GitHub</span></div></a></div>
         </div>
     </div>
 </section>
@@ -455,7 +506,7 @@
                      data-img="img/sig/Mapa_De_Pendiente.jpg"
                      data-flat="img/sig/Mapa_De_Pendiente.jpg"
                      data-3d="img/sig/Pendiente_mapa_3d.jpg">
-                    <img decoding="async" src="img/sig/Mapa_De_Pendiente.jpg" alt="Mapa de Pendiente">
+                    <img decoding="async" src="img/sig/Mapa_De_Pendiente.jpg" alt="Mapa de Pendiente" loading="lazy">
                     <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     <span class="sig-map-type">Pendiente</span>
                     <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
@@ -484,7 +535,7 @@
                      data-img="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg"
                      data-flat="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg"
                      data-3d="img/sig/Geomorfologia_mapa_3d.jpg">
-                    <img decoding="async" src="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg" alt="Mapa de Unidades Geomorfológicas">
+                    <img decoding="async" src="img/sig/Mapa_de_Unidades_Geomorfologicas.jpg" alt="Mapa de Unidades Geomorfológicas" loading="lazy">
                     <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     <span class="sig-map-type">Geomorfología</span>
                     <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
@@ -513,7 +564,7 @@
                      data-img="img/sig/Mapa_Geologico.jpg"
                      data-flat="img/sig/Mapa_Geologico.jpg"
                      data-3d="img/sig/Geologia_mapa_3d.jpg">
-                    <img decoding="async" src="img/sig/Mapa_Geologico.jpg" alt="Mapa Geológico">
+                    <img decoding="async" src="img/sig/Mapa_Geologico.jpg" alt="Mapa Geológico" loading="lazy">
                     <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     <span class="sig-map-type">Geología</span>
                     <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
@@ -540,7 +591,7 @@
                 <div class="sig-img-wrap"
                      data-title="Mapa de Isoyetas" data-type="Isoyetas · QGIS · Python"
                      data-img="img/sig/Mapa_de_Isoyetas.jpg">
-                    <img decoding="async" src="img/sig/Mapa_de_Isoyetas.jpg" alt="Mapa de Isoyetas">
+                    <img decoding="async" src="img/sig/Mapa_de_Isoyetas.jpg" alt="Mapa de Isoyetas" loading="lazy">
                     <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     <span class="sig-map-type">Isoyetas</span>
                 </div>
@@ -565,7 +616,7 @@
                      data-img="img/sig/Mapa_de_Altimetria.jpg"
                      data-flat="img/sig/Mapa_de_Altimetria.jpg"
                      data-3d="img/sig/Altimetria_3d.jpg">
-                    <img decoding="async" src="img/sig/Mapa_de_Altimetria.jpg" alt="Mapa de Altimetría">
+                    <img decoding="async" src="img/sig/Mapa_de_Altimetria.jpg" alt="Mapa de Altimetría" loading="lazy">
                     <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     <span class="sig-map-type">Altimetría</span>
                     <button class="sig-3d-toggle" onclick="toggleView3D(this,event)" title="Alternar vista 3D">
@@ -592,7 +643,7 @@
                 <div class="sig-img-wrap"
                      data-title="Mapa de Estabilidad del Paisaje" data-type="Estabilidad · QGIS · ArcGIS"
                      data-img="img/sig/Mapa_de_Estabilidad_del_paisaje.jpg">
-                    <img decoding="async" src="img/sig/Mapa_de_Estabilidad_del_paisaje.jpg" alt="Mapa de Estabilidad del Paisaje">
+                    <img decoding="async" src="img/sig/Mapa_de_Estabilidad_del_paisaje.jpg" alt="Mapa de Estabilidad del Paisaje" loading="lazy">
                     <div class="sig-zoom-btn"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     <span class="sig-map-type">Estabilidad</span>
                 </div>
@@ -624,12 +675,12 @@
             <div class="title-line"></div>
         </div>
         <div class="portfolio-grid portfolio-grid-web">
-            <div class="pcard anim-up"><a href="https://jesusmorilloportafolio.github.io/comida/#inicio" target="_blank"><div class="pcard-img"><img src="img/f2.jpg" alt="Restaurant"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Restaurant</h3><p>Sitio responsivo para restaurante.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.1s"><a href="https://jesusmorilloportafolio.github.io/gym/" target="_blank"><div class="pcard-img"><img src="img/f4.jpg" alt="GYM"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de GYM</h3><p>Sitio responsivo para gimnasio.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.2s"><a href="https://jesusmorilloportafolio.github.io/viajes/" target="_blank"><div class="pcard-img"><img src="img/f5.jpg" alt="Viajes"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Viajes</h3><p>Sitio de agencia de viajes.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.3s"><a href="https://jesusmorilloportafolio.github.io/tiendaZapatos/" target="_blank"><div class="pcard-img"><img src="img/f6.jpg" alt="Tienda"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Tienda Online</h3><p>Web para tienda de calzado.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.4s"><a href="https://jesusmorilloportafolio.github.io/Empresa/" target="_blank"><div class="pcard-img"><img src="img/f1.jpg" alt="Empresa"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web Corporativa</h3><p>Sitio web para empresa.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
-            <div class="pcard anim-up" style="animation-delay:.5s"><a href="https://jesusmorilloportafolio.github.io/Gamer/" target="_blank"><div class="pcard-img"><img src="img/f3.jpg" alt="Gamer"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Videojuegos</h3><p>Sitio para presentar videojuegos.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up"><a href="https://jesusmorilloportafolio.github.io/comida/#inicio" target="_blank"><div class="pcard-img"><img src="img/f2.jpg" alt="Restaurant" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Restaurant</h3><p>Sitio responsivo para restaurante.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.1s"><a href="https://jesusmorilloportafolio.github.io/gym/" target="_blank"><div class="pcard-img"><img src="img/f4.jpg" alt="GYM" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de GYM</h3><p>Sitio responsivo para gimnasio.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.2s"><a href="https://jesusmorilloportafolio.github.io/viajes/" target="_blank"><div class="pcard-img"><img src="img/f5.jpg" alt="Viajes" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Viajes</h3><p>Sitio de agencia de viajes.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.3s"><a href="https://jesusmorilloportafolio.github.io/tiendaZapatos/" target="_blank"><div class="pcard-img"><img src="img/f6.jpg" alt="Tienda" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Tienda Online</h3><p>Web para tienda de calzado.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.4s"><a href="https://jesusmorilloportafolio.github.io/Empresa/" target="_blank"><div class="pcard-img"><img src="img/f1.jpg" alt="Empresa" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web Corporativa</h3><p>Sitio web para empresa.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
+            <div class="pcard anim-up" style="animation-delay:.5s"><a href="https://jesusmorilloportafolio.github.io/Gamer/" target="_blank"><div class="pcard-img"><img src="img/f3.jpg" alt="Gamer" loading="lazy"></div><div class="pcard-overlay"><span class="pcard-tag mono">HTML · CSS · JS</span><h3>Web de Videojuegos</h3><p>Sitio para presentar videojuegos.</p><span class="pcard-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</span></div></a></div>
         </div>
     </div>
 </section>
@@ -647,8 +698,8 @@
                 <p class="contact-intro">¿Tienes un proyecto en mente? ¿Necesitas cartografía, un sitio web o una app? Escríbeme — siempre estoy dispuesto a colaborar.</p>
                 <div class="contact-items">
                     <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-location-dot"></i></div><div class="ci-text"><span class="ci-label">Ubicación</span><span class="ci-val">Caracas, Venezuela</span></div></div>
-                    <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-mobile-screen"></i></div><div class="ci-text"><span class="ci-label">Teléfono / WhatsApp</span><span class="ci-val">+58 0412-213-8280</span></div></div>
-                    <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-envelope"></i></div><div class="ci-text"><span class="ci-label">Email</span><a href="mailto:jesusmorillo507@gmail.com" class="ci-val ci-link">jesusmorillo507@gmail.com</a></div></div>
+                    <div class="contact-item ci-copyable" data-copy="+580412-213-8280"><div class="ci-icon"><i class="fa-solid fa-mobile-screen"></i></div><div class="ci-text"><span class="ci-label">Teléfono / WhatsApp</span><span class="ci-val">+58 0412-213-8280</span></div><button class="ci-copy-btn" title="Copiar número"><i class="fa-regular fa-copy"></i></button></div>
+                    <div class="contact-item ci-copyable" data-copy="jesusmorillo507@gmail.com"><div class="ci-icon"><i class="fa-solid fa-envelope"></i></div><div class="ci-text"><span class="ci-label">Email</span><a href="mailto:jesusmorillo507@gmail.com" class="ci-val ci-link">jesusmorillo507@gmail.com</a></div><button class="ci-copy-btn" title="Copiar email"><i class="fa-regular fa-copy"></i></button></div>
                     <div class="contact-item"><div class="ci-icon"><i class="fa-solid fa-globe"></i></div><div class="ci-text"><span class="ci-label">Portafolio</span><a href="https://jesusmorilloportafolio.github.io" target="_blank" class="ci-val ci-link">jesusmorilloportafolio.github.io</a></div></div>
                 </div>
                 <div class="contact-socials">
@@ -658,8 +709,45 @@
                 </div>
             </div>
             <div class="contact-right anim-right">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125541.57957589239!2d-66.92214400254235!3d10.48691729549837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58adcd824807%3A0x93dd2eae0a998483!2sCaracas%2C%20Distrito%20Capital!5e0!3m2!1ses!2sve!4v1700712064805!5m2!1ses!2sve"
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!-- ══ FORMULARIO DE CONTACTO ══
+                     Para activarlo: ve a formspree.io → crea una cuenta → nuevo form
+                     Copia el endpoint (https://formspree.io/f/XXXXXXXX) y reemplázalo abajo.
+                -->
+                <form class="contact-form" id="contactForm"
+                      action="https://formspree.io/f/xnjldwjj"
+                      method="POST">
+                    <div class="cf-header">
+                        <span class="mono cf-tag">// Envía un mensaje directo</span>
+                        <p class="cf-subtitle"></p>
+                    </div>
+                    <div class="cf-row">
+                        <div class="cf-group">
+                            <label class="cf-label" for="cf-name"><i class="fa-solid fa-user"></i> Nombre</label>
+                            <input type="text" id="cf-name" name="name" class="cf-input"
+                                   placeholder="Tu nombre completo" required autocomplete="name">
+                        </div>
+                        <div class="cf-group">
+                            <label class="cf-label" for="cf-email"><i class="fa-solid fa-envelope"></i> Email</label>
+                            <input type="email" id="cf-email" name="email" class="cf-input"
+                                   placeholder="tu@email.com" required autocomplete="email">
+                        </div>
+                    </div>
+                    <div class="cf-group">
+                        <label class="cf-label" for="cf-subject"><i class="fa-solid fa-tag"></i> Asunto</label>
+                        <input type="text" id="cf-subject" name="subject" class="cf-input"
+                               placeholder="¿De qué se trata tu proyecto?" required>
+                    </div>
+                    <div class="cf-group">
+                        <label class="cf-label" for="cf-message"><i class="fa-solid fa-message"></i> Mensaje</label>
+                        <textarea id="cf-message" name="message" class="cf-input cf-textarea"
+                                  placeholder="Cuéntame tu idea o proyecto con detalle..." rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary cf-submit" id="cfSubmit">
+                        <span id="cfBtnText">Enviar Mensaje <i class="fa-solid fa-paper-plane"></i></span>
+                        <span id="cfBtnLoading" style="display:none"><i class="fa-solid fa-spinner fa-spin"></i> Enviando...</span>
+                    </button>
+                    <div class="cf-status" id="cfStatus"></div>
+                </form>
             </div>
         </div>
     </div>
@@ -674,7 +762,7 @@
         <a href="https://github.com/JesusMorilloPortafolio" target="_blank"><i class="fa-brands fa-github"></i></a>
         <a href="mailto:jesusmorillo507@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i></a>
     </div>
-    <p class="footer-copy">© 2025 Jesus Morillo — Geografía · Python · Dev</p>
+    <p class="footer-copy">© <span id="footerYear">2025</span> Jesus Morillo — Geografía · Python · Dev</p>
 </footer>
 
 <script src="script.js"></script>
